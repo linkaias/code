@@ -8,7 +8,7 @@
     ],
     "description": "my code",
     "type": "project",
-    "license": "LK",
+    "license": "MIT",
     "authors": [
         {
             "name": "lk",
@@ -16,7 +16,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
     "version": "1.0.0",
     "autoload": {
         "psr-4": {
