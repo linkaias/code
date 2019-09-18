@@ -1,0 +1,24 @@
+{
+    "name": "lk/code",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/linkaias/code"
+        }
+    ],
+    "description": "my code",
+    "type": "project",
+    "license": "LK",
+    "authors": [
+        {
+            "name": "lk",
+            "email": "linkaiaslinkai@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "curl/curl": "^2.2"
+    },
+    "version": "1.0.0"
+
+}
