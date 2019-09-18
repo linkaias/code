@@ -1,0 +1,18 @@
+{
+    "name": "lkcodes/testhello",
+    "description": "my codes",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lk",
+            "email": "linkaiaslinkai@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "yuanmaketang\\Hello\\": "src/"
+        }
+    }
+}
