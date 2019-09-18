@@ -1,8 +1,9 @@
 {
     "name": "lkcodes/mycode",
     "description": "my codes",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "lk",
