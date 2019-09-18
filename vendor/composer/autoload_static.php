@@ -6,20 +6,9 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitacbe18f41699979847eb221a321ef3a2
 {
-    public static $prefixesPsr0 = array (
-        'C' => 
-        array (
-            'Curl' => 
-            array (
-                0 => __DIR__ . '/..' . '/curl/curl/src',
-            ),
-        ),
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInitacbe18f41699979847eb221a321ef3a2::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

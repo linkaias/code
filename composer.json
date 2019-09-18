@@ -16,9 +16,11 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {
-        "curl/curl": "^2.2"
-    },
-    "version": "1.0.0"
-
+    "require": {},
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "lk\\code\\": "src/"
+        }
+    }
 }
