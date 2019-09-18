@@ -1,5 +1,5 @@
 {
-    "name": "lkcodes/testhello",
+    "name": "lkcodes/mycode",
     "description": "my codes",
     "type": "project",
     "license": "MIT",
@@ -9,10 +9,14 @@
             "email": "linkaiaslinkai@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "curl/curl": "^2.2",
+        "facebook/graph-sdk" : "~5.0",
+        "facebook/php-business-sdk": "^3.0.0"
+    },
     "autoload": {
         "psr-4": {
-            "yuanmaketang\\Hello\\": "src/"
+            "lkcodes\\Mycode\\": "src/"
         }
     }
 }

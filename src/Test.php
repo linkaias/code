@@ -1,6 +1,6 @@
 <?php
-namespace yuanmaketang\Hello;
-class helloComposer
+namespace lkcodes\Mycode;
+class Test
 {
     public function sayHello()
     {
