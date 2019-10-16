@@ -12,8 +12,8 @@
     ],
     "require": {
         "curl/curl": "^2.2",
-        "facebook/graph-sdk" : "~5.0",
-        "facebook/php-business-sdk": "^3.0.0"
+        "laurentvw/scrapher": "2.*",
+        "phpoffice/phpspreadsheet": "dev-master"
     },
     "autoload": {
         "psr-4": {
