@@ -105,7 +105,7 @@ class Excel{
 
 
     }
-    
+
     /**
      * 根据类型导出文件
      * @param $name
