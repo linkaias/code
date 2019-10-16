@@ -7,6 +7,7 @@ use lkcodes\Mycode\lib\DB;
 use lkcodes\Mycode\lib\Excel;
 use lkcodes\Mycode\lib\Tool;
 
+var_dump((new Excel())->importTable('./1.xls'));die;
 $data=[
     ['test1'=>'test1111','test2'=>'12121212121212121','test3'=>'test333'],
     ['test1'=>'test1111','test2'=>'test222','test3'=>'test333'],

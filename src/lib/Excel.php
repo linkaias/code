@@ -1,13 +1,11 @@
 <?php
 namespace lkcodes\Mycode\lib;
 
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
@@ -180,12 +178,9 @@ class Excel{
             case 'xls':
                 header('Cache-Control: max-age=0');
                 header('Content-Disposition: attachment;filename="'.$name.'.xls'.'"');
-                $writer = IOFactory::createWriter($name.'.xls', 'xls');
+                $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($obj);
                 $writer->save('php://output');
                 break;
-            default:
-                throw new \Exception('Unexpected value');
-
         }
     }
 
