@@ -27,16 +27,17 @@ class Excel{
      * @param $data
      * @param $params
      *          $param=[
-                    'name'=>'风险广告列表',
-                    'suffix'=>'xlsl',
-                    'top_title'=>['ID','姓名','age'],
-                    'title'=>'title',
-                    'data_title'=>['test1','test2','test3'],
-                    'description'=>'文件描述',
-                    'keywords'=>'关键词',
-                    'category'=>'分类',
-                    ];
+     *            'name'=>'风险广告列表',
+     *            'suffix'=>'xlsl',
+     *            'top_title'=>['ID','姓名','age'],
+     *            'title'=>'title',
+     *            'data_title'=>['test1','test2','test3'],
+     *            'description'=>'文件描述',
+     *            'keywords'=>'关键词',
+     *            'category'=>'分类',
+     *          ];
      * @return string
+     * @throws \Exception
      */
     public function exportData($data,$params){
         $param=[
@@ -109,6 +110,11 @@ class Excel{
     }
 
 
+    /**
+     * 表格读取导入
+     * @param $file_path
+     * @return array|bool
+     */
     public function importTable($file_path)
     {
         try {
