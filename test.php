@@ -8,13 +8,13 @@ use lkcodes\Mycode\lib\Excel;
 use lkcodes\Mycode\lib\Tool;
 
 $data=[
-    ['test1'=>'test1111','test2'=>'test222','test3'=>'test333'],
+    ['test1'=>'test1111','test2'=>'12121212121212121','test3'=>'test333'],
     ['test1'=>'test1111','test2'=>'test222','test3'=>'test333'],
     ['test1'=>'test1111','test2'=>'test222','test3'=>'test333'],
 ];
 $param=[
     'name'=>'风险广告列表',
-    'suffix'=>'xlsl',
+    'suffix'=>'csv',
     'top_title'=>['T1','T2','T3'],
     'title'=>'title',
     'data_title'=>['test1','test2','test3'],

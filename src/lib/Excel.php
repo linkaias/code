@@ -1,6 +1,8 @@
 <?php
 namespace lkcodes\Mycode\lib;
 
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
@@ -80,12 +82,15 @@ class Excel{
             foreach($param['data_title'] as $title){
                 try {
                     $spreadsheet->getActiveSheet()->setCellValue($num.$a, $k[$title]);
+                    //$spreadsheet->getActiveSheet()->getStyle($num.$a)->getNumberFormat()
+                        //->setFormatCode(DataType::TYPE_STRING2);
                 } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
 
                 }
                 $num = Tool::chrNext($num);
             }
         }
+
         try {
             $this->saveTableType($param['name'], $param['suffix'], $spreadsheet);
         } catch (Exception $e) {
@@ -96,13 +101,9 @@ class Excel{
         //$spreadsheet->getActiveSheet()->mergeCells('A2:A3');
         //$spreadsheet->getActiveSheet()->unmergeCells('A2:A3');
 
-
         //释放内存
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);
-        die;
-
-
 
     }
 
@@ -115,26 +116,28 @@ class Excel{
      */
     protected function saveTableType($name,$type,$obj)
     {
+        header('Cache-Control: max-age=0');//禁止缓存
         switch ($type){
-            case 'xlsl':
-                $writer = new Xlsx($obj);
-                $writer->save($name.'.xlsx');
-                break;
-            case 'csv':
-                $writer = new Csv($obj);
-                $writer->save($name.'.csv');
-                break;
-            case 'xls':
-                $writer = new Xls($obj);
-                $writer->save($name.'.xls');
-                break;
-            case 'web': //输出到浏览器
+            case 'xlsx':
+
+                header('Cache-Control: max-age=0');
+                header('Content-Disposition: attachment;filename="' . $name.'.xlsx' . '"');
                 $writer = new Xlsx($obj);
                 $writer->save('php://output');
                 break;
+            case 'csv':
+                header('Cache-Control: max-age=0');
+                header('Content-Disposition: attachment;filename="' . $name.'.csv' . '"');
+                $writer = new Csv($obj);
+                $writer->save('php://output');
+                break;
+            case 'xls':
+                header('Cache-Control: max-age=0');
+                header('Content-Disposition: attachment;filename="'.$name.'.xls'.'"');
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($name.'.xls', 'xls');
+                $writer->save('php://output');
+                break;
         }
-        exit();
-
     }
 
 
