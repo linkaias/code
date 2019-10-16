@@ -14,7 +14,7 @@ $data=[
 ];
 $param=[
     'name'=>'风险广告列表',
-    'suffix'=>'csv',
+    'suffix'=>'xls',
     'top_title'=>['T1','T2','T3'],
     'title'=>'title',
     'data_title'=>['test1','test2','test3'],

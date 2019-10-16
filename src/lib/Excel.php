@@ -3,6 +3,7 @@ namespace lkcodes\Mycode\lib;
 
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
@@ -107,12 +108,51 @@ class Excel{
 
     }
 
+
+    public function importTable($file_path)
+    {
+        try {
+            $inputFileType = IOFactory::identify($file_path);
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return false;
+        } //传入Excel路径
+        try {
+            $excelReader = IOFactory::createReader($inputFileType);
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return false;
+        }
+        if(isset($excelReader)){
+            try {
+                $PHPExcel = $excelReader->load($file_path);
+            } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+                return false;
+            } // 载入excel文件
+            try {
+                $sheet = $PHPExcel->getSheet(0);
+            } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
+                return false;
+            } // 读取第一個工作表
+            $data = $sheet->toArray();
+            if($data){
+                return $data;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+
+    }
+
+
     /**
      * 根据类型导出文件
      * @param $name
      * @param $type
      * @param $obj
      * @throws Exception
+     * @throws \Exception
      */
     protected function saveTableType($name,$type,$obj)
     {
@@ -134,9 +174,12 @@ class Excel{
             case 'xls':
                 header('Cache-Control: max-age=0');
                 header('Content-Disposition: attachment;filename="'.$name.'.xls'.'"');
-                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($name.'.xls', 'xls');
+                $writer = IOFactory::createWriter($name.'.xls', 'xls');
                 $writer->save('php://output');
                 break;
+            default:
+                throw new \Exception('Unexpected value');
+
         }
     }
 
