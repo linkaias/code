@@ -1,13 +1,11 @@
 <?php
 namespace lkcodes\Mycode\lib\DB;
-use lkcodes\Mycode\lib\ParentController;
 
-class Mpdo  extends ParentController {
+class Mpdo  {
 	private $connection = null;
 	private $statement = null;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-	    parent::__construct();
 		try {
 			$this->connection = new \PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
 		} catch(\PDOException $e) {
