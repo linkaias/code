@@ -13,10 +13,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  * @package lkcodes\Mycode\lib
  * by lk
  */
-class Excel{
+class Excel extends ParentController{
 
     public function __construct()
     {
+        parent::__construct();
         set_time_limit(0);
     }
 
