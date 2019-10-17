@@ -32,9 +32,7 @@ class CreateKint extends ParentController {
         //是否禁用助手功能 d();等
         if(!$use_hepler)define('KINT_SKIP_HELPERS', true);
 
-        $file = strrpos(__FILE__,'\\');
-        $file = substr(__FILE__,0,$file);
-        require_once $file."/Kint.phar";
+        require_once __DIR__."/Kint.phar";
     }
 
 
