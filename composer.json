@@ -13,13 +13,12 @@
     "require": {
         "curl/curl": "^2.2",
         "laurentvw/scrapher": "2.*",
-        "phpoffice/phpspreadsheet": "^1.9",
-        "tracy/tracy": "^2.7@dev"
+        "phpoffice/phpspreadsheet": "^1.9"
     },
     "autoload": {
         "psr-4": {
             "lkcodes\\Mycode\\": "src/"
         }
     },
-    "version": "1.2.3"
+    "version": "1.2.4"
 }
