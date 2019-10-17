@@ -5,7 +5,7 @@ use lkcodes\Mycode\lib\DB\Mpdo;
 class DB extends Mpdo
 {
     protected $connection;
-    
+
     function __construct()
     {
         (new ParentController());
