@@ -18,7 +18,8 @@
     "autoload": {
         "psr-4": {
             "lkcodes\\Mycode\\": "src/"
-        }
+        },
+        "files": ["src/lib/kint.phar"]
     },
     "version": "1.1.5"
 }
