@@ -5,8 +5,14 @@ use lkcodes\Mycode\lib\DB;
 use lkcodes\Mycode\lib\Tool;
 use lkcodes\Mycode\other\DocParserFactory;
 use lkcodes\Mycode\other\WebInfo;
+use Tracy\Debugger;
+
 //require './src/lib/kint.phar';
 require_once __DIR__ . '/vendor/autoload.php';
+
+Debugger::enable();
+require_once __DIR__ . '/vendor/autoload.php1';
+
 //Kint::dump($GLOBALS, $_SERVER); // pass any number of parameters
 (new CreateKint());
 //d($GLOBALS, $_SERVER); // or simply use d() as a shorthand
