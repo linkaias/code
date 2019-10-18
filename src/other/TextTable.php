@@ -104,7 +104,7 @@ class TextTable {
      * @param bool $obj
      * @return string
      */
-	public static function  renderDelimiters($obj=true) {
+	public static function  renderDelimiters($obj=false) {
         if(!$obj){
             $res = '|';
             foreach ($obj->getData() as $key => $l)
@@ -130,7 +130,6 @@ class TextTable {
                     }
                 }
             }
-            die;
         }
 
     }
@@ -204,13 +203,10 @@ class TextTable {
                            }
 
                        }catch (\Exception $e){}catch (\Error $e){}
-
                         break;
-
                 }
             }
         }
-        die;
     }
 
     /**

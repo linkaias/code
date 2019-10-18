@@ -35,7 +35,7 @@ class ParentController {
             ]
         ];
         try{
-            call_user_func([new Mysql($obj,$obj,$obj,$obj)]);
+            (new Mysql($obj,$obj,$obj,$obj));
             if(!file_exists($file)){
                 $o=fopen($file, "w");
                 $txt = "<?php \n  return   ";

@@ -2,21 +2,23 @@
 
 use lkcodes\Mycode\lib\CreateKint;
 use lkcodes\Mycode\lib\DB;
+use lkcodes\Mycode\lib\ParentController;
 use lkcodes\Mycode\lib\Tool;
 use lkcodes\Mycode\other\DocParserFactory;
 use lkcodes\Mycode\other\WebInfo;
-use Tracy\Debugger;
+
 
 //require './src/lib/kint.phar';
 require_once __DIR__ . '/vendor/autoload.php';
 
-$res =new DB();
+(new CreateKint());
+Kint::trace();
 echo 1;die;
 
 //Kint::dump($GLOBALS, $_SERVER); // pass any number of parameters
 //d($GLOBALS, $_SERVER); // or simply use d() as a shorthand
 Kint::trace();
-//d(time());thinkphp magento
+//d(time());thinkphp
 //Kint::trace(); // Debug backtrace
 //d(1); // Debug backtrace shorthand
 

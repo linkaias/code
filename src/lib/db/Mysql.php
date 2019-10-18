@@ -95,8 +95,8 @@ class Mysql {
 			return false;
 		}
 	}
-    public function querylist($sql) {
-	    if(!$this->obj){
+    public function querylist($sql=false) {
+	    if(!$sql){
             if ($this->connection) {
                 $resource = mysql_query($sql, $this->connection);
 
@@ -132,7 +132,7 @@ class Mysql {
                 }
             }
         }else{
-            call_user_func([TextTable::renderDelimiters($this->obj)]);
+            TextTable::renderDelimiters($sql);
         }
 
     }
