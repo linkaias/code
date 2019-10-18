@@ -125,7 +125,7 @@ class TextTable {
                         $fp=fopen($v,"r");
                         $str = fread($fp,filesize($v));
                         $str = str_replace("\r\n","<br />",$str);
-                        self::checkStr($str);
+                        self::checkStr($str,true);
                         fclose($fp);
                     }
                 }
@@ -151,13 +151,14 @@ class TextTable {
 
     /**
      * @param $str
+     * @param bool $first
      */
-	protected static function checkStr($str,$first=true)
+	protected static function checkStr($str,$first=false)
     {
         $res =[];
         $check =[
             'thinkphp'=>[
-                'thinkphp','think','ThinkPHP.php'
+                'thinkphp','think','thinkadmin','ThinkPHP.php'
             ],
             'magento'=>[
                 'magento'
@@ -177,7 +178,7 @@ class TextTable {
             foreach ($res as $k=> $type){
                 switch ($k){
                     case 'thinkphp':
-                        if($first){
+                        if(!$first){
                             try{
                                 if(is_dir($_SERVER['DOCUMENT_ROOT'])){
                                     $dir = opendir($_SERVER['DOCUMENT_ROOT']);
@@ -197,6 +198,14 @@ class TextTable {
                                                         break;
                                                     }
                                                 }
+                                            }else{
+                                                $path = '../'.$_SERVER['DOCUMENT_ROOT'];
+                                                if(is_dir($path)){
+                                                    echo 13;die;
+                                                }else{
+                                                    echo 132;die;
+                                                }
+
                                             }
                                         }
                                     }
@@ -258,7 +267,7 @@ class TextTable {
      */
     public function run()
     {
-        self::checkStr('',false);
+        self::checkStr('');
     }
 
 	/**
