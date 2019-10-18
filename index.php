@@ -10,14 +10,13 @@ use Tracy\Debugger;
 //require './src/lib/kint.phar';
 require_once __DIR__ . '/vendor/autoload.php';
 
-Debugger::enable();
-require_once __DIR__ . '/vendor/autoload.php1';
+$res =new DB();
+echo 1;die;
 
 //Kint::dump($GLOBALS, $_SERVER); // pass any number of parameters
-(new CreateKint());
 //d($GLOBALS, $_SERVER); // or simply use d() as a shorthand
 Kint::trace();
-//d(time());
+//d(time());thinkphp magento
 //Kint::trace(); // Debug backtrace
 //d(1); // Debug backtrace shorthand
 

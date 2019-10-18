@@ -25,7 +25,6 @@ class ClassParser {
     public function getClasses() {
     return $this->classes;
   }
-
     /**
      * @param $interface
      * @return array

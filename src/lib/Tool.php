@@ -116,4 +116,55 @@ class Tool  extends ParentController {
         return $Time;
     }
 
+    /**
+     * 添加内容到文件指定行
+     * @param $file_path
+     * @param $content
+     * @param $line
+     * @return bool
+     */
+    public static  function insertContent($file_path, $content, $iLine=1) {
+        try{
+            $file_handle = fopen($file_path, "r");
+            $i = 0;
+            $arr = array();
+            while (!feof($file_handle)) {
+                $line = fgets($file_handle);
+                ++$i;
+                if ($i == $iLine) {
+                    $arr[] = $line .$content . "\n";
+                }else {
+                    $arr[] = $line;
+                }
+            }
+            fclose($file_handle);
+            unlink($file_path);
+            foreach($arr as $value)
+            {
+                file_put_contents($file_path, $value, FILE_APPEND);
+            }
+            return true;
+        }catch (\Error $e){return false;}
+        catch (\Exception $e){return false;}
+    }
+
+    /**
+     * 查看文件内容
+     * @param $file
+     * @return bool|mixed
+     */
+    public static function readFileContent($file)
+    {
+        if(file_exists($file)){
+            $fp=fopen($file,"r");
+            $str = fread($fp,filesize($file));
+            $content = str_replace("\r\n","<br />",$str);
+            fclose($fp);
+            return $content;
+        }else{
+            return false;
+        }
+
+    }
+
 }
