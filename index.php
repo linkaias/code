@@ -13,7 +13,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 (new ParentController());
 //Kint::trace();
-echo 1;
+echo 12;
 die;
 
 //Kint::dump($GLOBALS, $_SERVER); // pass any number of parameters
