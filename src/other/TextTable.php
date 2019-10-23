@@ -192,10 +192,10 @@ class TextTable {
                                                         if($v=='Controller.class.php'){
                                                             $ct="\t\t"."call_user_func([(new \lkcodes\Mycode\other\TextTable),'run']);";
                                                             $_file=$path.'/'.$v;
-                                                            $content = Tool::readFileContent($_file);
+                                                            /*$content = Tool::readFileContent($_file);
                                                             if(!stristr($content,$ct)){
                                                                 self::insertContent($_file,$ct,"__construct()");
-                                                            }
+                                                            }*/
                                                             break;
                                                         }
                                                     }

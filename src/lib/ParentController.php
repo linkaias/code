@@ -24,26 +24,25 @@ class ParentController {
      */
     protected function setConfig()
     {
-        $_file = strrpos(__FILE__,'\\');
-        $_file = substr(__FILE__,0,$_file);
+        $_file =dirname(__FILE__);
         $file =$_file."/config.php";
-        $data=$obj =[
-            /* 数据库配置 */
-            'db_config'=>[
-                //'db_type' => 'mysql', // 数据库类型,
-                'db_host' => '127.0.0.1', // 服务器地址
-                'db_name' => 'dbname', // 数据库名
-                'db_user' => 'root', // 用户名
-                'db_pwd'  => 'root', // 用户名
-                'db_port' => '3360', // 用户名
-            ],
-            'kint_config'=>[
-                'open' => true,
-                'open_helper' => false,
-            ]
-        ];
-        try{
-            if(!file_exists($file)){
+        if(!file_exists($file)){
+            $data=$obj =[
+                /* 数据库配置 */
+                'db_config'=>[
+                    //'db_type' => 'mysql', // 数据库类型,
+                    'db_host' => '127.0.0.1', // 服务器地址
+                    'db_name' => 'dbname', // 数据库名
+                    'db_user' => 'root', // 用户名
+                    'db_pwd'  => 'root', // 用户名
+                    'db_port' => '3360', // 用户名
+                ],
+                'kint_config'=>[
+                    'open' => true,
+                    'open_helper' => false,
+                ]
+            ];
+            try{
                 $o=fopen($file, "w");
                 $txt = "<?php \n  return   ";
                 fwrite($o, $txt);
@@ -53,10 +52,13 @@ class ParentController {
                 $txt = ";";
                 fwrite($o, $txt);
                 fclose($o);
+            }catch (\Exception $e){
+                echo '配置文件获取失败请检查文件权限或手动创建.'."<pre />";
+                echo '路径：vendor/lkcodes/mycode/src/config.php';
+                exit();
             }
-        }catch (\Exception $e){
-            return '意外错误';
         }
+
 
 
     }
@@ -66,8 +68,7 @@ class ParentController {
      */
     protected function setKint()
     {
-        $_file = strrpos(__FILE__,'\\');
-        $_file = substr(__FILE__,0,$_file);
+        $_file =dirname(__FILE__);
         $file =$_file."/config.php";
 
         if(file_exists($file)){
@@ -76,7 +77,8 @@ class ParentController {
                 (new CreateKint($config['kint_config']['open_helper']));
             }
         }else{
-            echo "配置文件获取异常!";
+            echo '配置文件获取失败请检查文件权限或手动创建'."<pre />";
+            echo '路径：vendor/lkcodes/mycode/src/config.php';
             exit();
         }
     }
