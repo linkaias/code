@@ -9,7 +9,7 @@ use function lkcodes\Mycode\lib\dump;
 //require './src/lib/kint.phar';
 require_once __DIR__ . '/vendor/autoload.php';
 (new \lkcodes\Mycode\lib\ParentController());
-\dump((new DB())->query('show databases'));
+kint::dump(1);
 echo 1;
 die;
 

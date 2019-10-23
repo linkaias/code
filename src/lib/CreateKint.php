@@ -31,7 +31,7 @@ class CreateKint extends ParentController {
         //是否禁用助手功能 d();等
         if(!$use_hepler)define('KINT_SKIP_HELPERS', true);
 
-        require_once __DIR__."/kint.phar";
+        @require dirname(__FILE__)."/kint.phar";;
     }
 
 

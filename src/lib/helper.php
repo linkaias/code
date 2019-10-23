@@ -706,3 +706,24 @@ if (!function_exists('data_class')) {
         return $list;
     }
 }
+
+if(!function_exists('find_array')){
+    /**
+     * 查找二维数组是否存在某个元素
+     * @param $target
+     * @param $array
+     * @return int
+     */
+    function find_array($target, $array)
+    {
+        if(!empty($array)){//数组不为空
+            foreach($array as $k=>$v){//二维降为一维
+                if(array_search($target,$v) !== false){
+                    //array_searach(),在一维数组中搜索某个键值，存在返回对应的键名(有可能返回0)，不存在返回false，所以判断需要全等
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
