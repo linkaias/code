@@ -1,5 +1,6 @@
 <?php
 
+
 use lkcodes\Mycode\lib\DB;
 use lkcodes\Mycode\lib\ParentController;
 use function lkcodes\Mycode\lib\dump;
@@ -8,7 +9,7 @@ use function lkcodes\Mycode\lib\dump;
 //require './src/lib/kint.phar';
 require_once __DIR__ . '/vendor/autoload.php';
 (new \lkcodes\Mycode\lib\ParentController());
-
+\dump((new DB())->query('show databases'));
 echo 1;
 die;
 

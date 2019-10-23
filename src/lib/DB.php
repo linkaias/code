@@ -1,6 +1,5 @@
 <?php
 namespace lkcodes\Mycode\lib;
-use lkcodes\Mycode\lib\DB\Mpdo;
 
 class DB extends Mpdo
 {
@@ -8,8 +7,7 @@ class DB extends Mpdo
 
     function __construct()
     {
-        $_file = strrpos(__FILE__,'\\');
-        $_file = substr(__FILE__,0,$_file);
+        $_file =dirname(__FILE__);
         $file =$_file."/config.php";
 
         if(file_exists($file)){

@@ -1,5 +1,5 @@
 <?php
-namespace lkcodes\Mycode\lib\DB;
+namespace lkcodes\Mycode\lib;
 
 class Mpdo  {
 	private $connection = null;
