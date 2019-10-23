@@ -18,7 +18,8 @@
     "autoload": {
         "psr-4": {
             "lkcodes\\Mycode\\": "src/"
-        }
+        },
+        "files": ["src/lib/helper.php"]
     },
-    "version": "1.3.34"
+    "version": "1.3.4"
 }

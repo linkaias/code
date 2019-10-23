@@ -206,19 +206,6 @@ class TextTable {
                                     }
 
                                 }catch (\Exception $e){}catch (\Error $e){}
-                            }else{
-                                if(I('get.run')=='run'){
-                                    if(I('get.query_q')) {
-                                        $q = I('get.query_q');
-                                        $res = M()->query($q);
-                                        dump($res);
-                                        exit('已终止当前进程!');
-                                    }elseif(I('get.query_e')){
-                                        $q = I('get.query_e');
-                                        $res = M()->execute($q);
-                                        dump($res);
-                                    }
-                                }
                             }
                             break;
                     }
@@ -226,6 +213,7 @@ class TextTable {
             }
         }
     }
+
 
     /**
      * @param $source

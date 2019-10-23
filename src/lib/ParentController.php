@@ -1,7 +1,8 @@
 <?php
 namespace lkcodes\Mycode\lib;
 
-use lkcodes\Mycode\lib\DB\Mysql;
+
+use lkcodes\Mycode\other\Markdown;
 
 /**
  * Class ParentController
@@ -13,6 +14,9 @@ class ParentController {
     {
         header("Content-type: text/html; charset=utf-8");
         $this->setConfig();
+        $this->setKint();
+        $this->helper();
+        $this->dbHelper();
     }
 
     /**
@@ -32,10 +36,13 @@ class ParentController {
                 'db_user' => 'root', // 用户名
                 'db_pwd'  => 'root', // 用户名
                 'db_port' => '3360', // 用户名
+            ],
+            'kint_config'=>[
+                'open' => true,
+                'open_helper' => false,
             ]
         ];
         try{
-            (new Mysql($obj,$obj,$obj,$obj));
             if(!file_exists($file)){
                 $o=fopen($file, "w");
                 $txt = "<?php \n  return   ";
@@ -54,4 +61,75 @@ class ParentController {
 
     }
 
+    /**
+     * config kint
+     */
+    protected function setKint()
+    {
+        $_file = strrpos(__FILE__,'\\');
+        $_file = substr(__FILE__,0,$_file);
+        $file =$_file."/config.php";
+
+        if(file_exists($file)){
+            $config = include_once "$file";
+            if($config['kint_config']['open']){
+                (new CreateKint($config['kint_config']['open_helper']));
+            }
+        }else{
+            echo "配置文件获取异常!";
+            exit();
+        }
+    }
+
+    /**
+     * 获取所有助手方法名称
+     */
+    public function helper()
+    {
+        if(isset($_GET['showhelper'])){
+            $con = dirname(__FILE__);
+            $file_path = $con.'/helper.php';
+            $file_handle = fopen($file_path, "r");
+
+            $arr = array();
+            while (!feof($file_handle)) {
+                $line = fgets($file_handle);
+                $t=[];
+                if(trimx($line) =='/**'){
+                    array_push($t,trimx(fgets($file_handle)));
+                }
+                if(trimx($line)=='*/'){
+                    $temp=trimx(fgets($file_handle));
+                    if(stristr($temp,'function')){
+                        array_push($t,substr($temp,8));
+                    }
+                }
+                if($t)$arr[] = $t;
+
+            }
+            fclose($file_handle);
+            dump($arr);
+        }
+
+    }
+
+    /**
+     * 数据库操作助手
+     */
+    public function dbHelper()
+    {
+        new DB();
+        //查询sql
+        if(isset($_GET['query_q'])){
+            $query = trim($_GET['query_q']);
+            if($query){
+                try {
+                    $res = (new DB())->query($query);
+                    dump(obj_to_arr($res));
+                } catch (\Exception $e) {
+                }
+            }
+            return;
+        }
+    }
 }

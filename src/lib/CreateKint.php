@@ -28,7 +28,6 @@ class CreateKint extends ParentController {
         //Kint::$enabled_mode = false; // Disable kint
         //d('Get off my lawn!'); // Debugs no longer have any effect
         */
-        parent::__construct();
         //是否禁用助手功能 d();等
         if(!$use_hepler)define('KINT_SKIP_HELPERS', true);
 

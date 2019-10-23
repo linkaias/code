@@ -30,7 +30,7 @@ class Mpdo  {
 		}
 	}
 
-	public function execute() {
+	public function execute($e) {
 		try {
 			if ($this->statement && $this->statement->execute()) {
 				$data = array();

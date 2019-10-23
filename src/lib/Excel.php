@@ -27,7 +27,7 @@ class Excel extends ParentController{
      * @param $params
      *          $param=[
      *            'name'=>'风险广告列表',
-     *            'suffix'=>'xlsl',
+     *            'suffix'=>'xlsx',
      *            'top_title'=>['ID','姓名','age'],
      *            'title'=>'title',
      *            'data_title'=>['test1','test2','test3'],
@@ -41,7 +41,7 @@ class Excel extends ParentController{
     public function exportData($data,$params){
         $param=[
             'name'=>isset($params['name'])?$params['name']:'测试',
-            'suffix'=>isset($params['suffix'])?$params['suffix']:'xlsl',
+            'suffix'=>isset($params['suffix'])?$params['suffix']:'xlsx',
             'top_title'=>isset($params['top_title'])?$params['top_title']:[],
             'title'=>isset($params['title'])?$params['title']:'title',
             'data_title'=>isset($params['data_title'])?$params['data_title']:[],

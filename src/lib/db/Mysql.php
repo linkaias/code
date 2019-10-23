@@ -8,8 +8,7 @@ class Mysql {
     private $connection;
 
 	public function __construct($hostname, $username, $password, $database, $port = '3306') {
-	    if(is_array($hostname))$this->obj=true;
-	    if(!$this->obj){
+	    if(!$this->obj==true){
             if (!$this->connection = mysql_connect($hostname . ':' . $port, $username, $password)) {
                 trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
                 exit();
