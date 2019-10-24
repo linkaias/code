@@ -134,14 +134,14 @@ if (!function_exists('chrNext')) {
     }
 }
 
-if (!function_exists('getTimeZone')) {
+if (!function_exists('getTimeBtTimeZone')) {
     /**
      * 根据时区名称获取当前时区时间
      * @param $timezone
      * @param string $format
      * @return false|string
      */
-    function getTimeZone($timezone, $format = "Y-m-d H:i:s")
+    function getTimeBtTimeZone($timezone, $format = "Y-m-d H:i:s")
     {
         $timezone_out = date_default_timezone_get();
         date_default_timezone_set($timezone);
