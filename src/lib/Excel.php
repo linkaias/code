@@ -72,7 +72,7 @@ class Excel extends ParentController{
 
             } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
             }
-            $num = Tool::chrNext($num);
+            $num = chrNext($num);
         }
 
         //数据写入
@@ -88,7 +88,7 @@ class Excel extends ParentController{
                 } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
 
                 }
-                $num = Tool::chrNext($num);
+                $num = chrNext($num);
             }
         }
 
