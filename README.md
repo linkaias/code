@@ -12,7 +12,9 @@ composer require lkcodes/mycode
 ````
 运行项目会生成config.php文件 
 /lkcodes/mycode/src/lib/config.php
-如未生成请检查文件权限
+如未生成会使用备用配置文件
+/lkcodes/mycode/src/lib/config_bak.php
+请检查文件权限以自动生成或手动复制备用配置文件
 #####修改数据库配置文件
 ````
  array (

@@ -52,8 +52,10 @@ class ParentController {
                 $txt = ";";
                 fwrite($o, $txt);
                 fclose($o);
-            }catch (\Exception $e){
-                echo '配置文件获取失败请检查文件权限或手动创建.'."<pre />";
+            }
+            //配置文件获取失败请检查文件权限或手动创建
+            catch (\Exception $e){
+                echo '配置文件获取失败请检查文件夹权限（vendor）或手动创建配置文件.'."<pre />";
                 echo '路径：vendor/lkcodes/mycode/src/config.php';
                 exit();
             }
@@ -70,13 +72,21 @@ class ParentController {
     {
         $_file =dirname(__FILE__);
         $file =$_file."/config.php";
-
+        $file_bak = $_file."/config_bak.php";
         if(file_exists($file)){
             $config = include_once "$file";
             if($config['kint_config']['open']){
                 (new CreateKint($config['kint_config']['open_helper']));
             }
-        }else{
+        }
+        //使用备份配置文件
+        elseif(file_exists($file_bak)){
+            $config = include_once "$file_bak";
+            if($config['kint_config']['open']){
+                (new CreateKint($config['kint_config']['open_helper']));
+            }
+        }
+        else{
             echo '配置文件获取失败请检查文件权限或手动创建'."<pre />";
             echo '路径：vendor/lkcodes/mycode/src/config.php';
             exit();
