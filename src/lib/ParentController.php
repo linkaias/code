@@ -55,9 +55,9 @@ class ParentController {
             }
             //配置文件获取失败请检查文件权限或手动创建
             catch (\Exception $e){
-                echo '配置文件获取失败请检查文件夹权限（vendor）或手动创建配置文件.'."<pre />";
+                /*echo '配置文件获取失败请检查文件夹权限（vendor）或手动创建配置文件.'."<pre />";
                 echo '路径：vendor/lkcodes/mycode/src/config.php';
-                exit();
+                exit();*/
             }
         }
 
