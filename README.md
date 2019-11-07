@@ -78,6 +78,24 @@ $param=[
                  'category'=>'分类',
                ];
 $table->exportData($data,$param);
+//若导出表格字段带有图片 则在数组对应字段中加入前缀 _IMG_
+//示例
+$param=[
+            'name'=>'测试',
+            'suffix'=>'xlsx',
+            'top_title'=>['图片','姓名'],
+            'title'=>'title',
+            'data_title'=>['_IMG_file_path','name'],
+            'description'=>'文件描述',
+            'keywords'=>'关键词',
+            'category'=>'分类',
+        ];
+        $info =[
+            ['_IMG_file_path'=>"./static/theme/img/404_icon.png",'name'=>'张三'],
+            ['_IMG_file_path'=>"./static/theme/img/404_icon.png",'name'=>'李四'],
+        ];
+        (new \lkcodes\Mycode\lib\Excel())->exportData($info,$param);die;
+
 
 //导入表格数据 return array;
 $table = new \lkcodes\Mycode\lib\Excel();

@@ -4,6 +4,7 @@ namespace lkcodes\Mycode\lib;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -82,9 +83,31 @@ class Excel extends ParentController{
             $num ='A';
             foreach($param['data_title'] as $title){
                 try {
-                    $spreadsheet->getActiveSheet()->setCellValue($num.$a, $k[$title]);
+                    //判断字段是否为图片
+                    $is_img = substr($title,0,5);
+                    //图片
+                    if($is_img =="_IMG_"){
+                        $objDrawing[$num.$a] = new Drawing();
+                        $objDrawing[$num.$a]->setPath($k[$title]);
+                        // 设置宽度高度
+                        $objDrawing[$num.$a]->setHeight(60);//照片高度
+                        //$objDrawing[$num.$a]->setWidth(30); //照片宽度
+
+                        //设置图片所在的位置
+                        $objDrawing[$num.$a]->setCoordinates($num.$a);
+
+                        // 写入图片在指定格中的X坐标值
+                        $objDrawing[$num.$a]->setOffsetX ( 12);
+                        // 写入图片在指定格中的Y坐标值
+                        $objDrawing[$num.$a]->setOffsetY ( 12 );
+                        $objDrawing[$num.$a]->setWorksheet($spreadsheet->getActiveSheet());
+                    }
+                    //数据
+                    else{
+                        $spreadsheet->getActiveSheet()->setCellValue($num.$a, $k[$title]);
+                    }
                     //$spreadsheet->getActiveSheet()->getStyle($num.$a)->getNumberFormat()
-                        //->setFormatCode(DataType::TYPE_STRING2);
+                    //->setFormatCode(DataType::TYPE_STRING2);
                 } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
 
                 }
