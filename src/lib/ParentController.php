@@ -154,7 +154,7 @@ class ParentController {
                 $select.='<option '.$selected.' value="'.$database['Database'].'">'.$database['Database'].'</option>';
             }
             $select.='</select>';
-            echo $select.'<input id="my_query_input" style="height: 40px ;width: 300px;padding: 5px" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 40px;border: none;color: white;background: gray">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href="/?query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
+            echo $select.'<input id="my_query_input" style="height: 40px ;width: 300px;padding: 5px" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 40px;border: none;color: white;background: gray">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href=href+"&query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
 
             $mysql = switchDatabaseDb($query_t_d);
             if($query_t_q){
