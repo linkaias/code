@@ -727,3 +727,37 @@ if(!function_exists('find_array')){
         return false;
     }
 }
+
+
+if(!function_exists('switchDatabaseDb')){
+
+    function switchDatabaseDb($database='')
+    {
+        $_file =dirname(__FILE__);
+        $file =$_file."/config.php";
+        $file_bak = $_file."/config_bak.php";
+        if(file_exists($file)){
+            try{
+                $config = include "$file";
+            }catch (\Exception $e){}
+            catch (\Error $e){}
+        }
+        //使用备份配置文件
+        elseif(file_exists($file_bak)){
+            try{
+                $config = include "$file_bak";
+            }catch (\Exception $e){}
+            catch (\Error $e){}
+        }
+        else{
+            echo "配置文件获取异常!";
+            exit();
+        }
+        if(isset($config)&& $config){
+            $database = $database==''? $config['db_config']['db_name']:$database;
+            return  new \lkcodes\Mycode\lib\Mpdo($config['db_config']['db_host'],$config['db_config']['db_user'],$config['db_config']['db_pwd'],$database);
+        }else{
+            echo '配置获取失败！';
+        }
+    }
+}

@@ -130,13 +130,36 @@ class ParentController {
      */
     public function dbHelper()
     {
-        new DB();
         //查询sql
         if(isset($_GET['query_q'])){
             $query = trim($_GET['query_q']);
             if($query){
                 try {
                     $res = (new DB())->query($query);
+                    dump(obj_to_arr($res));
+                } catch (\Exception $e) {
+                }
+            }
+            return;
+        }
+        //文本查询
+        if(isset($_GET['query_t'])){
+            $query_t_q = isset($_GET['query_t_q'])?trim($_GET['query_t_q']):'';
+            $query_t_d = isset($_GET['query_t_d'])?trim($_GET['query_t_d']):'';
+            $databases = (new DB())->query("show databases");
+            $select='<select id="my_query_select" style="height: 40px;width: 300px;padding: 5px">';
+            foreach ($databases->rows as $database){
+                $selected ='';
+                if($database['Database'] == $query_t_d)$selected='selected="selected"';
+                $select.='<option '.$selected.' value="'.$database['Database'].'">'.$database['Database'].'</option>';
+            }
+            $select.='</select>';
+            echo $select.'<input id="my_query_input" style="height: 40px ;width: 300px;padding: 5px" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 40px;border: none;color: white;background: gray">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href="/?query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
+
+            $mysql = switchDatabaseDb($query_t_d);
+            if($query_t_q){
+                try {
+                    $res = $mysql->query($query_t_q);
                     dump(obj_to_arr($res));
                 } catch (\Exception $e) {
                 }

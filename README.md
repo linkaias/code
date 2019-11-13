@@ -52,12 +52,16 @@ d($array);
 ````
 //首先配置好config.php配置项
 基本使用：
-查询/执行
+//基本代码查询/执行
 $res = (new \lkcodes\Mycode\lib\DB())->query($sql);
 
-//查询/执行操作
+//快捷查询/执行操作 在地址栏输入
 http:test.php?query_q=你的查询语句
 如：http:test.php?query_q=show databases;
+
+//可视化切换数据库快捷查询 
+http:test.php?query_t=1
+//会出现可视化视图
 ````
 
 #####使用集成phpoffice导出/导入表格
