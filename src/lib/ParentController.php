@@ -146,8 +146,8 @@ class ParentController {
         }
         //切换数据库可视化查询
         if(isset($_GET['query_t'])){
-            $query_t_q = isset($_GET['query_t_q'])?trim($_GET['query_t_q']):'';
-            $query_t_d = isset($_GET['query_t_d'])?trim($_GET['query_t_d']):'';
+            $query_t_q = isset($_GET['query_t_q'])?($_GET['query_t_q']):'';
+            $query_t_d = isset($_GET['query_t_d'])?($_GET['query_t_d']):'';
             try{
                 $databases = (new DB())->query("show databases");
             }catch (\Exception $e){
@@ -167,6 +167,7 @@ class ParentController {
             echo $select.'<input id="my_query_input" style="height: 30px !important ;width: 300px!important;padding: 5px !important" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 42px !important;border: none !important;color: white !important;background: gray !important;width: 50px !important;">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href=href+"&query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
 
             $mysql = switchDatabaseDb($query_t_d);
+            dump($query_t_q);
             if($query_t_q){
                 try {
                     $res = $mysql->query($query_t_q);

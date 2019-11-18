@@ -1,6 +1,6 @@
 {
     "name": "lkcodes/mycode",
-    "description": "my codes",
+    "description": "A collection of commonly used tools, such as exporting tables, manipulating databases,File caching, string processing/encoding and decoding, array and object conversion, and so on. It can be used in any framework",
     "type": "library",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -21,5 +21,5 @@
         },
         "files": ["src/lib/helper.php"]
     },
-    "version": "1.5.6"
+    "version": "1.5.7"
 }
