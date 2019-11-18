@@ -707,7 +707,7 @@ if (!function_exists('data_class')) {
     }
 }
 
-if(!function_exists('find_array')){
+if( !function_exists('find_array')){
     /**
      * 查找二维数组是否存在某个元素
      * @param $target
@@ -729,7 +729,7 @@ if(!function_exists('find_array')){
 }
 
 
-if(!function_exists('switchDatabaseDb')){
+if( !function_exists('switchDatabaseDb')){
 
     function switchDatabaseDb($database='')
     {
@@ -761,3 +761,134 @@ if(!function_exists('switchDatabaseDb')){
         }
     }
 }
+
+if( !function_exists('getTimeRanges')){
+    /**
+     * 获取时间范围的所有日期
+     * @param $begin_time
+     * @param $end_time
+     * @return array
+     */
+    function getTimeRanges($begin_time,$end_time){
+        $time_range=[['since'=>$begin_time,'until'=>$begin_time]];
+        $begin = strtotime($begin_time);
+        $end =strtotime($end_time);
+        for($i=0;$i<100;$i++){
+            $begin+=86400;
+            if($begin>$end){
+                break;
+            }
+            $temp['since']=date('Y-m-d',$begin);
+            $temp['until']=date('Y-m-d',$begin);
+            $time_range[] = $temp;
+        }
+        return $time_range;
+    }
+}
+
+if( !function_exists('getWeekFormat') ) {
+    /**
+     * 获取某年第几周的开始日期和结束日期
+     * @param int $year
+     * @param int $week 第几周;
+     * @return mixed
+     */
+    function getWeekFormat($year,$week){
+        //基本范围以周为单位
+        $year_start = mktime(0,0,0,1,1,$year);
+        $year_end = mktime(0,0,0,12,31,$year);
+        // 判断第一天是否为第一周的开始
+        if (intval(date('W',$year_start))===1){
+            $start = $year_start;//把第一天做为第一周的开始
+        }else{
+            $start = strtotime('+1 monday',$year_start);//把第一个周一作为开始
+        }
+
+        // 第几周的开始时间
+        if ($week===1){
+            $weekday['start'] = $start;
+        }else{
+            $weekday['start'] = strtotime('+'.($week-0).' monday',$start);
+        }
+        // 第几周的结束时间
+        $weekday['end'] = strtotime('+1 sunday',$weekday['start']);
+        if (date('Y',$weekday['end'])!=$year){
+            $weekday['end'] = $year_end;
+        }
+        $weekday['start'] = date('Y-m-d 00:00:00',$weekday['start']);
+        $weekday['end'] = date('Y-m-d 23:59:59',$weekday['end']);
+        return $weekday;
+    }
+}
+
+if( !function_exists('getAllWeek')){
+    /**
+     * 计算一年有多少周，每周从星期一开始，
+     * 如果最后一天在周四后（包括周四）算完整的一周，否则不计入当年的最后一周
+     * 如果第一天在周四前（包括周四）算完整的一周，否则不计入当年的第一周
+     * @param int $year
+     * return int
+     * @return false|string
+     */
+    function getAllWeek($year){
+        //$year_start = mktime(0,0,0,1,1,$year);
+        $year_end = mktime(0,0,0,12,31,$year);
+        if (intval(date('W',$year_end))===1){
+            return date('W',strtotime('last week',$year_end));
+        }else{
+            return date('W',$year_end);
+        }
+    }
+}
+
+if( !function_exists('getWeek')){
+
+    /**
+     * 获取距离现在最近N周的时间段
+     * @param $week
+     * @return array
+     */
+    function getWeek($week){
+        $dates=$weeks=[];
+        for ($i=0;$i<=$week;$i++){
+            $temp = date("Y-m-d").' -'.$i." week";
+            $begin = date("Y-m-d",strtotime($temp));
+            $temp = date("Y-m-d").' -'.$i." week +6 day";
+            $end = date("Y-m-d",strtotime($temp));
+            $year =date("Y",strtotime($temp));
+            $dates[] = ['since'=>$begin,'until'=>$end];
+            $_week = date('W',strtotime($temp));
+            $weeks[] = [$year.' Week '.$_week];
+        }
+        return ['date'=>$dates,'week'=>$weeks];
+    }
+}
+
+if( !function_exists('getMonth')){
+
+    /**
+     * 获取距离现在最近N月的时间段
+     * @param $month_num
+     * @return array
+     */
+    function getMonth($month_num){
+        $month_num = $month_num-1;
+        $range=$date=[];
+        $now_month = date("m");
+        $time = date('Y').'-'.$now_month.'-10';
+        $firstday = date('Y-m-01', strtotime($time));
+        $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
+        $range[] = ['since'=>$firstday,'until'=>$lastday];
+        $date[]=$now_month;
+        for($i=1;$i<=$month_num;$i++){
+            $temp =date('Y-m-d').' -'.$i." month";
+            $temp_month = date('Y-m-d',strtotime($temp));
+            $firstday = date('Y-m-01', strtotime($temp_month));
+            $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
+            $range[] = ['since'=>$firstday,'until'=>$lastday];
+            $date[]=date('m',strtotime($temp_month));
+        }
+        return ['range'=>$range,'date'=>$date];
+    }
+}
+

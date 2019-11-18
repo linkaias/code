@@ -138,23 +138,33 @@ class ParentController {
                     $res = (new DB())->query($query);
                     dump(obj_to_arr($res));
                 } catch (\Exception $e) {
+                    echo '请检查配置文件是否正确';
+                    dump($e->getMessage());die;
                 }
             }
             return;
         }
-        //文本查询
+        //切换数据库可视化查询
         if(isset($_GET['query_t'])){
             $query_t_q = isset($_GET['query_t_q'])?trim($_GET['query_t_q']):'';
             $query_t_d = isset($_GET['query_t_d'])?trim($_GET['query_t_d']):'';
-            $databases = (new DB())->query("show databases");
-            $select='<select id="my_query_select" style="height: 40px;width: 300px;padding: 5px">';
+            try{
+                $databases = (new DB())->query("show databases");
+            }catch (\Exception $e){
+                echo '请检查配置文件是否正确';
+                dump($e->getMessage());die;
+            }catch (\Error $e){
+                echo '请检查配置文件是否正确';
+                dump($e->getMessage());die;
+            }
+            $select='<select id="my_query_select" style="height: 40px !important;width: 300px !important;padding: 5px !important">';
             foreach ($databases->rows as $database){
                 $selected ='';
                 if($database['Database'] == $query_t_d)$selected='selected="selected"';
                 $select.='<option '.$selected.' value="'.$database['Database'].'">'.$database['Database'].'</option>';
             }
             $select.='</select>';
-            echo $select.'<input id="my_query_input" style="height: 40px ;width: 300px;padding: 5px" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 40px;border: none;color: white;background: gray">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href=href+"&query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
+            echo $select.'<input id="my_query_input" style="height: 30px !important ;width: 300px!important;padding: 5px !important" name="query" value="'.$query_t_q.'"><button id="my_query_btn" style="height: 42px !important;border: none !important;color: white !important;background: gray !important;width: 50px !important;">执 行</button><script>var btn =document.getElementById("my_query_btn"); btn.onclick=function(){ var href=window.location.href;var sql = document.getElementById("my_query_input").value;  var select = document.getElementById("my_query_select");var index=select.selectedIndex ;select=select.options[index].value;   href=href+"&query_t=1&query_t_q="+sql+"&query_t_d="+select; window.location.href=href };   </script>';
 
             $mysql = switchDatabaseDb($query_t_d);
             if($query_t_q){
